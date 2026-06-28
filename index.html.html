@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Entrenched Player Database</title>
+
+<link rel="stylesheet" href="style.css">
+
+</head>
+
+<body>
+
+<header>
+
+<h1>Entrenched Player Database</h1>
+
+<p>Version 10</p>
+
+</header>
+
+<main>
+
+<section class="card">
+
+<h2>Add Player</h2>
+
+<label>Player Name</label>
+<input
+id="playerName"
+type="text"
+placeholder="Enter player name">
+
+<label>Danger</label>
+
+<input
+id="danger"
+type="range"
+min="0"
+max="10"
+value="5">
+
+<div class="value" id="dangerValue">
+5
+</div>
+
+<label>Difficulty</label>
+
+<input
+id="difficulty"
+type="range"
+min="0"
+max="10"
+value="5">
+
+<div class="value" id="difficultyValue">
+5
+</div>
+
+<label>Rarity</label>
+
+<select id="rarity">
+
+<option>Legendary</option>
+
+<option>Rare</option>
+
+<option>Three-Quarters-Rare</option>
+
+<option>Semi-Rare</option>
+
+<option>Uncommon</option>
+
+<option>Common</option>
+
+</select>
+
+<button id="addPlayer">
+
+Add Player
+
+</button>
+
+<div id="status"></div>
+
+</section>
+
+<section class="card">
+
+<h2>Danger vs Difficulty</h2>
+
+<canvas
+id="graph"
+width="900"
+height="600">
+</canvas>
+
+</section>
+
+<section class="card">
+
+<h2>
+
+Players
+
+(<span id="playerCount">0</span>)
+
+</h2>
+
+<div id="playerList">
+
+No players yet.
+
+</div>
+
+</section>
+
+</main>
+
+<script src="script.js"></script>
+
+</body>
+</html>
