@@ -1,5 +1,5 @@
 /* ===================================== */
-/* Entrenched Database V12 */
+/* Entrenched Database V12.1 */
 /* style.css */
 /* ===================================== */
 
@@ -22,25 +22,34 @@
 
     --primary:#0a84ff;
 
+    --graphText:#222222;
+    --graphGrid:rgba(120,120,120,.25);
+    --graphOutline:#333333;
+
     --shadow:0 10px 24px rgba(0,0,0,.08);
 
 }
 
 body.dark{
 
-    --bg:#15171a;
+    --bg:#121417;
 
-    --card:#202328;
+    --card:#1d2127;
 
-    --card2:#2b2f35;
+    --card2:#2a3038;
 
-    --text:#ffffff;
+    --text:#f5f5f5;
+    --sub:#c3cad4;
 
-    --sub:#b7bec8;
+    --border:#4c5562;
 
-    --border:#40444b;
+    --primary:#4da3ff;
 
-    --shadow:0 10px 28px rgba(0,0,0,.45);
+    --graphText:#ffffff;
+    --graphGrid:rgba(255,255,255,.18);
+    --graphOutline:#ffffff;
+
+    --shadow:0 12px 30px rgba(0,0,0,.45);
 
 }
 
@@ -55,7 +64,9 @@ body{
     "Segoe UI",
     sans-serif;
 
-    transition:.25s;
+    transition:
+    background .25s,
+    color .25s;
 
     padding:22px;
 
@@ -69,7 +80,7 @@ header{
 
     align-items:center;
 
-    margin-bottom:20px;
+    margin-bottom:22px;
 
 }
 
@@ -99,9 +110,17 @@ header{
 
     padding:12px 18px;
 
+    font-weight:700;
+
     cursor:pointer;
 
-    font-weight:700;
+    transition:.2s;
+
+}
+
+.headerButton:hover{
+
+    transform:translateY(-2px);
 
 }
 
@@ -127,6 +146,10 @@ header{
 
     box-shadow:var(--shadow);
 
+    transition:
+    background .25s,
+    color .25s;
+
 }
 
 .graphCard{
@@ -143,7 +166,7 @@ header{
 
     align-items:center;
 
-    margin-bottom:14px;
+    margin-bottom:16px;
 
 }
 
@@ -181,6 +204,8 @@ select{
     color:var(--text);
 
     font-size:15px;
+
+    transition:.25s;
 
 }
 
@@ -254,19 +279,21 @@ canvas{
 
     border-radius:16px;
 
-    border:1px solid var(--border);
+    border:2px solid var(--border);
 
     background:
     linear-gradient(
     to top right,
 
-    rgba(40,180,70,.18),
+    rgba(60,180,75,.18),
 
-    rgba(255,220,0,.15),
+    rgba(255,210,0,.14),
 
-    rgba(255,0,0,.14)
+    rgba(255,0,0,.12)
 
     );
+
+    transition:border .25s;
 
 }
 
@@ -323,6 +350,14 @@ canvas{
     padding:15px;
 
     border-left:6px solid var(--primary);
+
+    transition:.25s;
+
+}
+
+.player:hover{
+
+    transform:translateY(-2px);
 
 }
 
