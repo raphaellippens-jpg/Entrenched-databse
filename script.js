@@ -1434,3 +1434,56 @@ status.textContent=
 "Database exported.";
 
 };
+// ---------- Import ----------
+
+importDatabase.onclick=()=>{
+
+importFile.click();
+
+};
+
+importFile.onchange=e=>{
+
+const file=e.target.files[0];
+
+if(!file){
+
+return;
+
+}
+
+const reader=new FileReader();
+
+reader.onload=event=>{
+
+try{
+
+players=JSON.parse(
+event.target.result
+);
+
+savePlayers();
+
+refresh();
+
+status.style.color=
+"#16a34a";
+
+status.textContent=
+"Database imported.";
+
+}catch{
+
+status.style.color=
+"#dc2626";
+
+status.textContent=
+"Invalid database file.";
+
+}
+
+};
+
+reader.readAsText(file);
+
+};
