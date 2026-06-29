@@ -8,7 +8,7 @@
 <meta name="viewport"
 content="width=device-width, initial-scale=1.0">
 
-<title>Entrenched Database V12.1</title>
+<title>Entrenched Database V13.0</title>
 
 <link rel="stylesheet" href="style.css">
 
@@ -45,6 +45,10 @@ class="headerButton">
 <main>
 
 <div class="layout">
+
+<!-- ========================= -->
+<!-- LEFT PANEL -->
+<!-- ========================= -->
 
 <section class="card">
 
@@ -116,6 +120,10 @@ Add Player
 
 </section>
 
+<!-- ========================= -->
+<!-- GRAPH -->
+<!-- ========================= -->
+
 <section class="card graphCard">
 
 <div class="graphHeader">
@@ -141,6 +149,10 @@ height="850">
 
 </div>
 
+<!-- ========================= -->
+<!-- PLAYER DATABASE -->
+<!-- ========================= -->
+
 <section class="card">
 
 <div class="databaseHeader">
@@ -151,7 +163,11 @@ height="850">
 
 <p>
 
-<span id="playerCount">0</span>
+<span id="playerCount">
+
+0
+
+</span>
 
 Players
 
@@ -170,10 +186,21 @@ placeholder="🔍 Search player...">
 
 <select id="sort">
 
-<option value="name">Sort by Name</option>
-<option value="danger">Sort by Danger</option>
-<option value="difficulty">Sort by Difficulty</option>
-<option value="rarity">Sort by Rarity</option>
+<option value="name">
+Sort by Name
+</option>
+
+<option value="danger">
+Sort by Danger
+</option>
+
+<option value="difficulty">
+Sort by Difficulty
+</option>
+
+<option value="rarity">
+Sort by Rarity
+</option>
 
 </select>
 
@@ -186,6 +213,170 @@ No players yet.
 </div>
 
 </section>
+
+<!-- ========================= -->
+<!-- PLAYER INFO WINDOW -->
+<!-- NEW IN V13 -->
+<!-- ========================= -->
+
+<div
+id="playerModal"
+class="modal hidden">
+
+<div class="modalContent">
+
+<h2 id="modalName">
+
+Player
+
+</h2>
+
+<p>
+
+<strong id="labelRarity">
+
+Rarity
+
+</strong>
+
+<span id="modalRarity">
+
+Common
+
+</span>
+
+</p>
+
+<p>
+
+<strong id="labelDanger">
+
+Danger
+
+</strong>
+
+<span id="modalDanger">
+
+0/25
+
+</span>
+
+</p>
+
+<p>
+
+<strong id="labelDifficulty">
+
+Difficulty
+
+</strong>
+
+<span id="modalDifficulty">
+
+0/25
+
+</span>
+
+</p>
+
+<label
+for="modalDescription">
+
+<strong id="labelDescription">
+
+Description
+
+</strong>
+
+</label>
+
+<textarea
+id="modalDescription"
+rows="8"
+placeholder="Write anything about this player...">
+
+</textarea>
+
+<div class="modalButtons">
+
+<button
+id="saveDescription">
+
+💾 Save
+
+</button>
+
+<button
+id="editPlayer">
+
+✏️ Edit
+
+</button>
+
+<button
+id="deletePlayerModal">
+
+🗑️ Delete
+
+</button>
+
+<button
+id="closeModal">
+
+Close
+
+</button>
+
+</div>
+
+</div>
+
+</div>
+
+<!-- ========================= -->
+<!-- DELETE CONFIRM WINDOW -->
+<!-- NEW IN V13 -->
+<!-- ========================= -->
+
+<div
+id="deleteModal"
+class="modal hidden">
+
+<div class="modalContent">
+
+<h2>
+
+Delete Player?
+
+</h2>
+
+<p>
+
+This action cannot be undone.
+
+</p>
+
+<div class="modalButtons">
+
+<button
+id="cancelDelete">
+
+Cancel
+
+</button>
+
+<button
+id="confirmDelete">
+
+Delete
+
+</button>
+
+</div>
+
+</div>
+
+</div>
 
 </main>
 
