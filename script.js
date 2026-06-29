@@ -1,5 +1,5 @@
 // ======================================
-// Entrenched Database V12
+// Entrenched Database V12.1
 // script.js
 // Part 1
 // ======================================
@@ -53,31 +53,32 @@ Common:"#4caf50"
 
 // ---------- Storage ----------
 
-let players=
-JSON.parse(
+let players=JSON.parse(
 localStorage.getItem("players")||"[]"
 );
+
+// Give IDs to old players automatically
+
+players.forEach(player=>{
+
+if(player.id===undefined){
+
+player.id=Date.now()+Math.random();
+
+}
+
+});
 
 let darkMode=
 localStorage.getItem("theme")==="dark";
 
-if(darkMode){
+applyTheme(false);
 
-document.body.classList.add("dark");
+function applyTheme(save=true){
 
-themeToggle.textContent="☀️ Light Mode";
-
-}
-
-themeToggle.onclick=()=>{
-
-darkMode=!darkMode;
-
-document.body.classList.toggle("dark");
-
-localStorage.setItem(
-"theme",
-darkMode?"dark":"light"
+document.body.classList.toggle(
+"dark",
+darkMode
 );
 
 themeToggle.textContent=
@@ -85,7 +86,24 @@ darkMode?
 "☀️ Light Mode":
 "🌙 Dark Mode";
 
+if(save){
+
+localStorage.setItem(
+"theme",
+darkMode?"dark":"light"
+);
+
+}
+
 drawGraph();
+
+}
+
+themeToggle.onclick=()=>{
+
+darkMode=!darkMode;
+
+applyTheme();
 
 };
 
@@ -121,7 +139,8 @@ if(name===""){
 
 status.style.color="#ff3b30";
 
-status.textContent="Please enter a player.";
+status.textContent=
+"Please enter a player.";
 
 return;
 
@@ -129,7 +148,9 @@ return;
 
 players.push({
 
-id:Date.now()+Math.random(),
+id:crypto.randomUUID ?
+crypto.randomUUID():
+Date.now()+Math.random(),
 
 name:name,
 
@@ -155,35 +176,44 @@ difficultyValue.textContent=12;
 
 status.style.color="#16a34a";
 
-status.textContent="Player added!";
+status.textContent=
+"Player added!";
 
 refresh();
 
 };
+
 // ---------- Save ----------
 
 function savePlayers(){
 
 localStorage.setItem(
+
 "players",
+
 JSON.stringify(players)
+
 );
 
-// Theme
-
 localStorage.setItem(
+
 "theme",
+
 darkMode?"dark":"light"
+
 );
 
 }
+
 // ---------- Delete ----------
 
 function deletePlayer(id){
 
-players=players.filter(
+players=
 
-player=>player.id!=id
+players.filter(
+
+player=>player.id!==id
 
 );
 
@@ -193,8 +223,8 @@ refresh();
 
 }
 
-window.deletePlayer=deletePlayer;
-
+window.deletePlayer=
+deletePlayer;
 // ---------- Refresh ----------
 
 function refresh(){
@@ -238,7 +268,7 @@ break;
 
 case "rarity":
 
-const order={
+const rarityOrder={
 
 Legendary:7,
 
@@ -258,7 +288,8 @@ Common:1
 
 list.sort(
 (a,b)=>
-order[b.rarity]-order[a.rarity]
+rarityOrder[b.rarity]-
+rarityOrder[a.rarity]
 );
 
 break;
@@ -322,7 +353,7 @@ ${player.difficulty}/25
 <div class="playerButtons">
 
 <button
-onclick="deletePlayer(${player.id})"
+onclick="deletePlayer('${player.id}')">
 
 Delete
 
@@ -338,7 +369,7 @@ playerList.appendChild(card);
 
 }
 
-drawGraph();
+drawGraph(list);
 
 }
 
@@ -348,7 +379,7 @@ sort.onchange=refresh;
 
 // ---------- Graph ----------
 
-function drawGraph(){
+function drawGraph(displayPlayers){
 
 ctx.clearRect(
 0,
@@ -367,9 +398,23 @@ canvas.width-150;
 const height=
 canvas.height-120;
 
+// Colors from CSS
+
+const style=
+getComputedStyle(document.body);
+
+const textColor=
+style.getPropertyValue("--graphText").trim();
+
+const gridColor=
+style.getPropertyValue("--graphGrid").trim();
+
+const axisColor=
+style.getPropertyValue("--graphOutline").trim();
+
 // Axes
 
-ctx.strokeStyle="#555";
+ctx.strokeStyle=axisColor;
 
 ctx.lineWidth=2;
 
@@ -391,8 +436,7 @@ ctx.stroke();
 
 // Grid
 
-ctx.strokeStyle=
-"rgba(150,150,150,.25)";
+ctx.strokeStyle=gridColor;
 
 for(let i=1;i<MAX_VALUE;i++){
 
@@ -431,12 +475,7 @@ ctx.stroke();
 
 // Numbers
 
-ctx.fillStyle=
-document.body.classList.contains("dark")
-?
-"#ffffff"
-:
-"#333333";
+ctx.fillStyle=textColor;
 
 ctx.font="13px Arial";
 
@@ -466,11 +505,11 @@ height*i/MAX_VALUE+5
 );
 
 }
-// ---------- Draw Players ----------
+  // ---------- Draw Players ----------
 
 const usedPositions={};
 
-players.forEach(player=>{
+(displayPlayers||players).forEach(player=>{
 
 const key=
 player.danger+
@@ -487,8 +526,7 @@ const index=
 usedPositions[key]++;
 
 const angle=
-index*
-(Math.PI/4);
+index*(Math.PI/4);
 
 const radius=
 index*8;
@@ -529,35 +567,33 @@ Math.PI*2
 
 ctx.fill();
 
-// Outline
+// White outline
 
 ctx.lineWidth=2;
 
-ctx.strokeStyle=
-"#ffffff";
+ctx.strokeStyle="#ffffff";
 
 ctx.stroke();
 
 // Name
 
-ctx.fillStyle=
-document.body.classList.contains("dark")
-?
-"#ffffff"
-:
-"#111111";
+ctx.fillStyle=textColor;
 
 ctx.font="14px Arial";
 
 ctx.fillText(
+
 player.name,
+
 x+12,
+
 y-10
+
 );
 
 });
 
-// ---------- Preview Dot ----------
+// ---------- Preview ----------
 
 if(playerName.value.trim()!==""){
 
@@ -593,12 +629,7 @@ ctx.fill();
 
 ctx.globalAlpha=1;
 
-ctx.fillStyle=
-document.body.classList.contains("dark")
-?
-"#ffffff"
-:
-"#111111";
+ctx.fillStyle=textColor;
 
 ctx.fillText(
 
@@ -616,12 +647,7 @@ previewY-12
 
 ctx.save();
 
-ctx.fillStyle=
-document.body.classList.contains("dark")
-?
-"#ffffff"
-:
-"#333333";
+ctx.fillStyle=textColor;
 
 ctx.font="18px Arial";
 
@@ -630,15 +656,20 @@ ctx.fillText(
 "Difficulty",
 
 left+
-width/2-40,
+width/2-
+40,
 
-canvas.height-25
+canvas.height-
+25
 
 );
 
 ctx.translate(
+
 25,
+
 canvas.height/2
+
 );
 
 ctx.rotate(
@@ -661,4 +692,4 @@ ctx.restore();
 
 // ---------- Start ----------
 
-refresh();    
+refresh();
