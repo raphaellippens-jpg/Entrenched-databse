@@ -51,19 +51,27 @@ Common:"#4caf50"
 
 };
 
+
 // ---------- Storage ----------
 
 let players=JSON.parse(
 localStorage.getItem("players")||"[]"
 );
 
-// Give IDs to old players automatically
+// Convert old players to use string IDs
 
 players.forEach(player=>{
 
 if(player.id===undefined){
 
-player.id=Date.now()+Math.random();
+player.id=
+Date.now().toString()+
+Math.random().toString();
+
+}else{
+
+player.id=
+String(player.id);
 
 }
 
@@ -106,7 +114,6 @@ darkMode=!darkMode;
 applyTheme();
 
 };
-
 // ---------- Sliders ----------
 
 danger.oninput=()=>{
@@ -129,6 +136,7 @@ playerName.oninput=drawGraph;
 
 rarity.onchange=drawGraph;
 
+
 // ---------- Add Player ----------
 
 addPlayer.onclick=()=>{
@@ -148,9 +156,9 @@ return;
 
 players.push({
 
-id:crypto.randomUUID ?
-crypto.randomUUID():
-Date.now()+Math.random(),
+id:
+Date.now().toString()+
+Math.random().toString(),
 
 name:name,
 
@@ -207,13 +215,14 @@ darkMode?"dark":"light"
 
 // ---------- Delete ----------
 
+// ---------- Delete ----------
+
 function deletePlayer(id){
 
-players=
+players=players.filter(player=>
 
-players.filter(
-
-player=>player.id!==id
+String(player.id)!==
+String(id)
 
 );
 
@@ -225,6 +234,7 @@ refresh();
 
 window.deletePlayer=
 deletePlayer;
+
 // ---------- Refresh ----------
 
 function refresh(){
