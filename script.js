@@ -231,16 +231,13 @@ function refresh(){
 
 let list=[...players];
 
-const query=
-search.value.toLowerCase().trim();
+const query=search.value.toLowerCase().trim();
 
 if(query){
 
 list=list.filter(player=>
 
-player.name
-.toLowerCase()
-.includes(query)
+player.name.toLowerCase().includes(query)
 
 );
 
@@ -250,19 +247,13 @@ switch(sort.value){
 
 case "danger":
 
-list.sort(
-(a,b)=>
-b.danger-a.danger
-);
+list.sort((a,b)=>b.danger-a.danger);
 
 break;
 
 case "difficulty":
 
-list.sort(
-(a,b)=>
-b.difficulty-a.difficulty
-);
+list.sort((a,b)=>b.difficulty-a.difficulty);
 
 break;
 
@@ -286,39 +277,29 @@ Common:1
 
 };
 
-list.sort(
-(a,b)=>
-rarityOrder[b.rarity]-
-rarityOrder[a.rarity]
-);
+list.sort((a,b)=>rarityOrder[b.rarity]-rarityOrder[a.rarity]);
 
 break;
 
 default:
 
-list.sort(
-(a,b)=>
-a.name.localeCompare(b.name)
-);
+list.sort((a,b)=>a.name.localeCompare(b.name));
 
 }
 
-playerCount.textContent=
-list.length;
+playerCount.textContent=list.length;
 
 playerList.innerHTML="";
 
 if(list.length===0){
 
-playerList.innerHTML=
-"No players found.";
+playerList.innerHTML="No players found.";
 
 }else{
 
 list.forEach(player=>{
 
-const card=
-document.createElement("div");
+const card=document.createElement("div");
 
 card.className="player";
 
@@ -334,17 +315,9 @@ ${player.name}
 
 <div class="playerStats">
 
-${player.rarity}
-
-<br>
-
-Danger:
-${player.danger}/25
-
-<br>
-
-Difficulty:
-${player.difficulty}/25
+${player.rarity}<br>
+Danger: ${player.danger}/25<br>
+Difficulty: ${player.difficulty}/25
 
 </div>
 
@@ -352,8 +325,7 @@ ${player.difficulty}/25
 
 <div class="playerButtons">
 
-<button
-onclick="deletePlayer('${player.id}')">
+<button class="deleteBtn">
 
 Delete
 
@@ -362,6 +334,14 @@ Delete
 </div>
 
 `;
+
+const btn=card.querySelector(".deleteBtn");
+
+btn.addEventListener("click",()=>{
+
+deletePlayer(player.id);
+
+});
 
 playerList.appendChild(card);
 
@@ -376,7 +356,6 @@ drawGraph(list);
 search.oninput=refresh;
 
 sort.onchange=refresh;
-
 // ---------- Graph ----------
 
 function drawGraph(displayPlayers){
