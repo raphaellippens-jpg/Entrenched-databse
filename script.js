@@ -322,7 +322,7 @@ ${player.difficulty}/25
 <div class="playerButtons">
 
 <button
-onclick="deletePlayer(player.id)"
+onclick="deletePlayer(${player.id})"
 
 Delete
 
