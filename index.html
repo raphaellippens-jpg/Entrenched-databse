@@ -8,7 +8,7 @@
 <meta name="viewport"
 content="width=device-width, initial-scale=1.0">
 
-<title>Entrenched Database V12</title>
+<title>Entrenched Database V12.1</title>
 
 <link rel="stylesheet" href="style.css">
 
@@ -34,7 +34,7 @@ Community Player Statistics
 id="themeToggle"
 class="headerButton">
 
-🌙 Dark Mode
+🌓 Toggle Theme
 
 </button>
 
@@ -46,30 +46,18 @@ class="headerButton">
 
 <div class="layout">
 
-<!-- ====================== -->
-<!-- LEFT SIDE -->
-<!-- ====================== -->
-
 <section class="card">
 
 <h2>Add Player</h2>
 
-<label>
-
-Player Name
-
-</label>
+<label>Player Name</label>
 
 <input
 type="text"
 id="playerName"
 placeholder="Player name">
 
-<label>
-
-Danger
-
-</label>
+<label>Danger</label>
 
 <input
 type="range"
@@ -86,11 +74,7 @@ id="dangerValue">
 
 </div>
 
-<label>
-
-Difficulty
-
-</label>
+<label>Difficulty</label>
 
 <input
 type="range"
@@ -107,55 +91,17 @@ id="difficultyValue">
 
 </div>
 
-<label>
-
-Rarity
-
-</label>
+<label>Rarity</label>
 
 <select id="rarity">
 
-<option>
-
-Legendary
-
-</option>
-
-<option>
-
-Epic
-
-</option>
-
-<option>
-
-Rare
-
-</option>
-
-<option>
-
-Three-Quarters-Rare
-
-</option>
-
-<option>
-
-Semi-Rare
-
-</option>
-
-<option>
-
-Uncommon
-
-</option>
-
-<option>
-
-Common
-
-</option>
+<option>Legendary</option>
+<option>Epic</option>
+<option>Rare</option>
+<option>Three-Quarters-Rare</option>
+<option>Semi-Rare</option>
+<option>Uncommon</option>
+<option>Common</option>
 
 </select>
 
@@ -166,35 +112,19 @@ Add Player
 
 </button>
 
-<div
-id="status">
-
-</div>
+<div id="status"></div>
 
 </section>
 
-<!-- ====================== -->
-<!-- RIGHT SIDE -->
-<!-- ====================== -->
-
-<section
-class="card graphCard">
+<section class="card graphCard">
 
 <div class="graphHeader">
 
 <div>
 
-<h2>
+<h2>Danger vs Difficulty</h2>
 
-Danger vs Difficulty
-
-</h2>
-
-<p>
-
-25 × 25 Graph
-
-</p>
+<p>25 × 25 Graph</p>
 
 </div>
 
@@ -211,31 +141,17 @@ height="850">
 
 </div>
 
-<!-- ====================== -->
-<!-- PLAYER DATABASE -->
-<!-- ====================== -->
-
-<section
-class="card">
+<section class="card">
 
 <div class="databaseHeader">
 
 <div>
 
-<h2>
-
-Player Database
-
-</h2>
+<h2>Player Database</h2>
 
 <p>
 
-<span
-id="playerCount">
-
-0
-
-</span>
+<span id="playerCount">0</span>
 
 Players
 
@@ -248,47 +164,22 @@ Players
 <div class="toolbar">
 
 <input
-
 type="text"
-
 id="search"
-
-placeholder="🔍 Search player..."
-
->
+placeholder="🔍 Search player...">
 
 <select id="sort">
 
-<option value="name">
-
-Sort by Name
-
-</option>
-
-<option value="danger">
-
-Sort by Danger
-
-</option>
-
-<option value="difficulty">
-
-Sort by Difficulty
-
-</option>
-
-<option value="rarity">
-
-Sort by Rarity
-
-</option>
+<option value="name">Sort by Name</option>
+<option value="danger">Sort by Danger</option>
+<option value="difficulty">Sort by Difficulty</option>
+<option value="rarity">Sort by Rarity</option>
 
 </select>
 
 </div>
 
-<div
-id="playerList">
+<div id="playerList">
 
 No players yet.
 
