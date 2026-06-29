@@ -1,323 +1,661 @@
-// ================================
-// Entrenched Player Database V11
-// ================================
+// ======================================
+// Entrenched Database V12
+// script.js
+// Part 1
+// ======================================
 
-const playerName = document.getElementById("playerName");
-const danger = document.getElementById("danger");
-const difficulty = document.getElementById("difficulty");
-const rarity = document.getElementById("rarity");
+// ---------- Elements ----------
 
-const dangerValue = document.getElementById("dangerValue");
-const difficultyValue = document.getElementById("difficultyValue");
+const playerName=document.getElementById("playerName");
+const danger=document.getElementById("danger");
+const difficulty=document.getElementById("difficulty");
+const rarity=document.getElementById("rarity");
 
-const addPlayerBtn = document.getElementById("addPlayer");
+const dangerValue=document.getElementById("dangerValue");
+const difficultyValue=document.getElementById("difficultyValue");
 
-const status = document.getElementById("status");
+const addPlayer=document.getElementById("addPlayer");
 
-const playerList = document.getElementById("playerList");
-const playerCount = document.getElementById("playerCount");
+const playerList=document.getElementById("playerList");
+const playerCount=document.getElementById("playerCount");
 
-const canvas = document.getElementById("graph");
-const ctx = canvas.getContext("2d");
+const search=document.getElementById("search");
+const sort=document.getElementById("sort");
 
-const rarityColors = {
+const themeToggle=document.getElementById("themeToggle");
 
-    Legendary:"#ff3b30",
+const status=document.getElementById("status");
 
-    Epic:"#8b5cf6",
+const canvas=document.getElementById("graph");
+const ctx=canvas.getContext("2d");
 
-    Rare:"#06b6d4",
+// ---------- Constants ----------
 
-    "Three-Quarters-Rare":"#f59e0b",
+const MAX_VALUE=25;
 
-    "Semi-Rare":"#eab308",
+const rarityColors={
 
-    Uncommon:"#3b82f6",
+Legendary:"#ff3b30",
 
-    Common:"#22c55e"
+Epic:"#8b5cf6",
+
+Rare:"#00bcd4",
+
+"Three-Quarters-Rare":"#ff9800",
+
+"Semi-Rare":"#ffd600",
+
+Uncommon:"#2196f3",
+
+Common:"#4caf50"
 
 };
 
-let players = JSON.parse(
-    localStorage.getItem("players") || "[]"
+// ---------- Storage ----------
+
+let players=
+JSON.parse(
+localStorage.getItem("players")||"[]"
 );
+
+let darkMode=
+localStorage.getItem("theme")==="dark";
+
+if(darkMode){
+
+document.body.classList.add("dark");
+
+themeToggle.textContent="☀️ Light Mode";
+
+}
+
+themeToggle.onclick=()=>{
+
+darkMode=!darkMode;
+
+document.body.classList.toggle("dark");
+
+localStorage.setItem(
+"theme",
+darkMode?"dark":"light"
+);
+
+themeToggle.textContent=
+darkMode?
+"☀️ Light Mode":
+"🌙 Dark Mode";
+
+drawGraph();
+
+};
+
+// ---------- Sliders ----------
+
+danger.oninput=()=>{
+
+dangerValue.textContent=danger.value;
+
+drawGraph();
+
+};
+
+difficulty.oninput=()=>{
+
+difficultyValue.textContent=difficulty.value;
+
+drawGraph();
+
+};
+
+playerName.oninput=drawGraph;
+
+rarity.onchange=drawGraph;
+
+// ---------- Add Player ----------
+
+addPlayer.onclick=()=>{
+
+const name=playerName.value.trim();
+
+if(name===""){
+
+status.style.color="#ff3b30";
+
+status.textContent=
+"Please enter a player.";
+
+return;
+
+}
+
+players.push({
+
+name:name,
+
+danger:Number(danger.value),
+
+difficulty:Number(difficulty.value),
+
+rarity:rarity.value
+
+});
+
+savePlayers();
+
+playerName.value="";
+
+danger.value=12;
+
+difficulty.value=12;
+
+dangerValue.textContent=12;
+
+difficultyValue.textContent=12;
+
+status.style.color="#16a34a";
+
+status.textContent=
+"Player added!";
+
+refresh();
+
+};
+
+// ---------- Save ----------
 
 function savePlayers(){
 
-    localStorage.setItem(
-        "players",
-        JSON.stringify(players)
-    );
+localStorage.setItem(
+"players",
+JSON.stringify(players)
+);
+
+// Theme
+
+localStorage.setItem(
+"theme",
+darkMode?"dark":"light"
+);
 
 }
-
-danger.oninput = () => {
-
-    dangerValue.textContent = danger.value;
-
-    drawGraph();
-
-};
-
-difficulty.oninput = () => {
-
-    difficultyValue.textContent = difficulty.value;
-
-    drawGraph();
-
-};
-
-playerName.oninput = drawGraph;
-
-rarity.onchange = drawGraph;
-
-addPlayerBtn.onclick = () => {
-
-    const name = playerName.value.trim();
-
-    if(name===""){
-
-        status.style.color="#ef4444";
-
-        status.textContent="Please enter a player name.";
-
-        return;
-
-    }
-
-    players.push({
-
-        name:name,
-
-        danger:Number(danger.value),
-
-        difficulty:Number(difficulty.value),
-
-        rarity:rarity.value
-
-    });
-
-    savePlayers();
-
-    playerName.value="";
-
-    danger.value=5;
-
-    difficulty.value=5;
-
-    dangerValue.textContent="5";
-
-    difficultyValue.textContent="5";
-
-    status.style.color="#16a34a";
-
-    status.textContent="Player added!";
-
-    refresh();
-
-};
+// ---------- Delete ----------
 
 function deletePlayer(index){
 
-    players.splice(index,1);
+players.splice(index,1);
 
-    savePlayers();
+savePlayers();
 
-    refresh();
+refresh();
 
 }
 
-window.deletePlayer = deletePlayer;
+window.deletePlayer=deletePlayer;
+
+// ---------- Refresh ----------
 
 function refresh(){
 
-    playerCount.textContent = players.length;
+let list=[...players];
 
-    playerList.innerHTML = "";
+const query=
+search.value.toLowerCase().trim();
 
-    if(players.length===0){
+if(query){
 
-        playerList.innerHTML = "No players yet.";
+list=list.filter(player=>
 
-    }else{
+player.name
+.toLowerCase()
+.includes(query)
 
-        players.forEach((player,index)=>{
-
-            const div = document.createElement("div");
-
-            div.className = "player";
-
-            div.innerHTML = `
-                <div class="playerInfo">
-
-                    <div class="playerName">
-                        ${player.name}
-                    </div>
-
-                    <div class="playerStats">
-                        ${player.rarity}
-                        • Danger ${player.danger}
-                        • Difficulty ${player.difficulty}
-                    </div>
-
-                </div>
-
-                <div class="playerButtons">
-
-                    <button onclick="deletePlayer(${index})">
-                        Delete
-                    </button>
-
-                </div>
-            `;
-
-            playerList.appendChild(div);
-
-        });
-
-    }
-
-    drawGraph();
+);
 
 }
+
+switch(sort.value){
+
+case "danger":
+
+list.sort(
+(a,b)=>
+b.danger-a.danger
+);
+
+break;
+
+case "difficulty":
+
+list.sort(
+(a,b)=>
+b.difficulty-a.difficulty
+);
+
+break;
+
+case "rarity":
+
+const order={
+
+Legendary:7,
+
+Epic:6,
+
+Rare:5,
+
+"Three-Quarters-Rare":4,
+
+"Semi-Rare":3,
+
+Uncommon:2,
+
+Common:1
+
+};
+
+list.sort(
+(a,b)=>
+order[b.rarity]-order[a.rarity]
+);
+
+break;
+
+default:
+
+list.sort(
+(a,b)=>
+a.name.localeCompare(b.name)
+);
+
+}
+
+playerCount.textContent=
+list.length;
+
+playerList.innerHTML="";
+
+if(list.length===0){
+
+playerList.innerHTML=
+"No players found.";
+
+}else{
+
+list.forEach(player=>{
+
+const card=
+document.createElement("div");
+
+card.className="player";
+
+card.innerHTML=`
+
+<div class="playerInfo">
+
+<div class="playerName">
+
+${player.name}
+
+</div>
+
+<div class="playerStats">
+
+${player.rarity}
+
+<br>
+
+Danger:
+${player.danger}/25
+
+<br>
+
+Difficulty:
+${player.difficulty}/25
+
+</div>
+
+</div>
+
+<div class="playerButtons">
+
+<button
+onclick="deletePlayer(players.indexOf(player))">
+
+Delete
+
+</button>
+
+</div>
+
+`;
+
+playerList.appendChild(card);
+
+});
+
+}
+
+drawGraph();
+
+}
+
+search.oninput=refresh;
+
+sort.onchange=refresh;
+
+// ---------- Graph ----------
 
 function drawGraph(){
 
-    ctx.clearRect(0,0,canvas.width,canvas.height);
+ctx.clearRect(
+0,
+0,
+canvas.width,
+canvas.height
+);
 
-    const left = 70;
-    const top = 30;
-    const width = canvas.width - 110;
-    const height = canvas.height - 80;
+const left=90;
 
-    ctx.lineWidth = 2;
+const top=50;
 
-    ctx.strokeStyle = "#333";
+const width=
+canvas.width-150;
 
-    ctx.beginPath();
+const height=
+canvas.height-120;
 
-    ctx.moveTo(left,top);
+// Axes
 
-    ctx.lineTo(left,top+height);
+ctx.strokeStyle="#555";
 
-    ctx.lineTo(left+width,top+height);
+ctx.lineWidth=2;
 
-    ctx.stroke();
+ctx.beginPath();
 
-    ctx.strokeStyle = "#dddddd";
+ctx.moveTo(left,top);
 
-    for(let i=1;i<10;i++){
+ctx.lineTo(
+left,
+top+height
+);
 
-        const x = left + width*i/10;
+ctx.lineTo(
+left+width,
+top+height
+);
 
-        const y = top + height - height*i/10;
+ctx.stroke();
 
-        ctx.beginPath();
+// Grid
 
-        ctx.moveTo(x,top);
+ctx.strokeStyle=
+"rgba(150,150,150,.25)";
 
-        ctx.lineTo(x,top+height);
+for(let i=1;i<MAX_VALUE;i++){
 
-        ctx.stroke();
+const x=
+left+
+width*i/MAX_VALUE;
 
-        ctx.beginPath();
+const y=
+top+
+height-
+height*i/MAX_VALUE;
 
-        ctx.moveTo(left,y);
+ctx.beginPath();
 
-        ctx.lineTo(left+width,y);
+ctx.moveTo(x,top);
 
-        ctx.stroke();
+ctx.lineTo(
+x,
+top+height
+);
 
-    }
+ctx.stroke();
 
-    for(let i=0;i<=10;i++){
+ctx.beginPath();
 
-        ctx.fillStyle="#666";
+ctx.moveTo(left,y);
 
-        ctx.fillText(
-            i,
-            left+width*i/10-3,
-            top+height+18
-        );
+ctx.lineTo(
+left+width,
+y
+);
 
-        ctx.fillText(
-            i,
-            left-18,
-            top+height-height*i/10+4
-        );
-
-    }
-
-    players.forEach(player=>{
-
-        const x =
-            left +
-            (player.difficulty/10)*width;
-
-        const y =
-            top +
-            height -
-            (player.danger/10)*height;
-
-        ctx.fillStyle =
-            rarityColors[player.rarity];
-
-        ctx.beginPath();
-
-        ctx.arc(
-            x,
-            y,
-            8,
-            0,
-            Math.PI*2
-        );
-
-        ctx.fill();
-
-        ctx.fillStyle="#111";
-
-        ctx.font="14px Arial";
-
-        ctx.fillText(
-            player.name,
-            x+10,
-            y-10
-        );
-
-    });
-
-    if(playerName.value.trim()!==""){
-
-        const x =
-            left +
-            (difficulty.value/10)*width;
-
-        const y =
-            top +
-            height -
-            (danger.value/10)*height;
-
-        ctx.globalAlpha = 0.35;
-
-        ctx.fillStyle =
-            rarityColors[rarity.value];
-
-        ctx.beginPath();
-
-        ctx.arc(
-            x,
-            y,
-            9,
-            0,
-            Math.PI*2
-        );
-
-        ctx.fill();
-
-        ctx.globalAlpha = 1;
-
-    }
+ctx.stroke();
 
 }
 
-refresh();
+// Numbers
+
+ctx.fillStyle=
+document.body.classList.contains("dark")
+?
+"#ffffff"
+:
+"#333333";
+
+ctx.font="13px Arial";
+
+for(let i=0;i<=MAX_VALUE;i++){
+
+ctx.fillText(
+
+i,
+
+left+
+width*i/MAX_VALUE-5,
+
+top+height+20
+
+);
+
+ctx.fillText(
+
+i,
+
+left-28,
+
+top+
+height-
+height*i/MAX_VALUE+5
+
+);
+
+}
+// ---------- Draw Players ----------
+
+const usedPositions={};
+
+players.forEach(player=>{
+
+const key=
+player.danger+
+","+
+player.difficulty;
+
+if(!usedPositions[key]){
+
+usedPositions[key]=0;
+
+}
+
+const index=
+usedPositions[key]++;
+
+const angle=
+index*
+(Math.PI/4);
+
+const radius=
+index*8;
+
+const offsetX=
+Math.cos(angle)*radius;
+
+const offsetY=
+Math.sin(angle)*radius;
+
+const x=
+left+
+(player.difficulty/MAX_VALUE)
+*width+
+offsetX;
+
+const y=
+top+
+height-
+(player.danger/MAX_VALUE)
+*height+
+offsetY;
+
+// Dot
+
+ctx.beginPath();
+
+ctx.fillStyle=
+rarityColors[player.rarity];
+
+ctx.arc(
+x,
+y,
+8,
+0,
+Math.PI*2
+);
+
+ctx.fill();
+
+// Outline
+
+ctx.lineWidth=2;
+
+ctx.strokeStyle=
+"#ffffff";
+
+ctx.stroke();
+
+// Name
+
+ctx.fillStyle=
+document.body.classList.contains("dark")
+?
+"#ffffff"
+:
+"#111111";
+
+ctx.font="14px Arial";
+
+ctx.fillText(
+player.name,
+x+12,
+y-10
+);
+
+});
+
+// ---------- Preview Dot ----------
+
+if(playerName.value.trim()!==""){
+
+const previewX=
+left+
+(Number(difficulty.value)/MAX_VALUE)
+*width;
+
+const previewY=
+top+
+height-
+(Number(danger.value)/MAX_VALUE)
+*height;
+
+ctx.globalAlpha=.45;
+
+ctx.beginPath();
+
+ctx.fillStyle=
+rarityColors[
+rarity.value
+];
+
+ctx.arc(
+previewX,
+previewY,
+10,
+0,
+Math.PI*2
+);
+
+ctx.fill();
+
+ctx.globalAlpha=1;
+
+ctx.fillStyle=
+document.body.classList.contains("dark")
+?
+"#ffffff"
+:
+"#111111";
+
+ctx.fillText(
+
+playerName.value,
+
+previewX+12,
+
+previewY-12
+
+);
+
+}
+
+// Axis titles
+
+ctx.save();
+
+ctx.fillStyle=
+document.body.classList.contains("dark")
+?
+"#ffffff"
+:
+"#333333";
+
+ctx.font="18px Arial";
+
+ctx.fillText(
+
+"Difficulty",
+
+left+
+width/2-40,
+
+canvas.height-25
+
+);
+
+ctx.translate(
+25,
+canvas.height/2
+);
+
+ctx.rotate(
+-Math.PI/2
+);
+
+ctx.fillText(
+
+"Danger",
+
+0,
+
+0
+
+);
+
+ctx.restore();
+
+}
+
+// ---------- Start ----------
+
+refresh();    
