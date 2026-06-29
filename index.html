@@ -5,12 +5,17 @@
 
 <meta charset="UTF-8">
 
-<meta name="viewport"
+<meta
+name="viewport"
 content="width=device-width, initial-scale=1.0">
 
-<title>Entrenched Database V13.0</title>
+<title>
+Entrenched Database V13
+</title>
 
-<link rel="stylesheet" href="style.css">
+<link
+rel="stylesheet"
+href="style.css">
 
 </head>
 
@@ -20,10 +25,16 @@ content="width=device-width, initial-scale=1.0">
 
 <div class="titleSection">
 
-<h1>Entrenched Database</h1>
+<h1>
+
+Entrenched Database
+
+</h1>
 
 <p>
+
 Community Player Statistics
+
 </p>
 
 </div>
@@ -34,7 +45,7 @@ Community Player Statistics
 id="themeToggle"
 class="headerButton">
 
-🌓 Toggle Theme
+🌙 Dark Mode
 
 </button>
 
@@ -46,29 +57,53 @@ class="headerButton">
 
 <div class="layout">
 
-<!-- ========================= -->
+<!-- ================================= -->
 <!-- LEFT PANEL -->
-<!-- ========================= -->
+<!-- ================================= -->
 
 <section class="card">
 
-<h2>Add Player</h2>
+<h2>
 
-<label>Player Name</label>
+Add Player
+
+</h2>
+
+<label>
+
+Player Name
+
+</label>
 
 <input
+
 type="text"
-id="playerName"
-placeholder="Player name">
 
-<label>Danger</label>
+id="playerName"
+
+placeholder="Player name"
+
+>
+
+<label>
+
+Danger
+
+</label>
 
 <input
+
 type="range"
+
 id="danger"
+
 min="0"
+
 max="25"
-value="12">
+
+value="12"
+
+>
 
 <div
 class="value"
@@ -78,14 +113,25 @@ id="dangerValue">
 
 </div>
 
-<label>Difficulty</label>
+<label>
+
+Difficulty
+
+</label>
 
 <input
+
 type="range"
+
 id="difficulty"
+
 min="0"
+
 max="25"
-value="12">
+
+value="12"
+
+>
 
 <div
 class="value"
@@ -95,17 +141,56 @@ id="difficultyValue">
 
 </div>
 
-<label>Rarity</label>
+<label>
 
-<select id="rarity">
+Rarity
 
-<option>Legendary</option>
-<option>Epic</option>
-<option>Rare</option>
-<option>Three-Quarters-Rare</option>
-<option>Semi-Rare</option>
-<option>Uncommon</option>
-<option>Common</option>
+</label>
+
+<select
+id="rarity">
+
+<option>
+
+Legendary
+
+</option>
+
+<option>
+
+Epic
+
+</option>
+
+<option>
+
+Rare
+
+</option>
+
+<option>
+
+Three-Quarters-Rare
+
+</option>
+
+<option>
+
+Semi-Rare
+
+</option>
+
+<option>
+
+Uncommon
+
+</option>
+
+<option>
+
+Common
+
+</option>
 
 </select>
 
@@ -116,32 +201,50 @@ Add Player
 
 </button>
 
-<div id="status"></div>
+<div
+id="status">
+
+</div>
 
 </section>
 
-<!-- ========================= -->
+<!-- ================================= -->
 <!-- GRAPH -->
-<!-- ========================= -->
+<!-- ================================= -->
 
-<section class="card graphCard">
+<section
+class="card graphCard">
 
-<div class="graphHeader">
+<div
+class="graphHeader">
 
 <div>
 
-<h2>Danger vs Difficulty</h2>
+<h2>
 
-<p>25 × 25 Graph</p>
+Danger vs Difficulty
+
+</h2>
+
+<p>
+
+25 × 25 Graph
+
+</p>
 
 </div>
 
 </div>
 
 <canvas
+
 id="graph"
+
 width="1200"
-height="850">
+
+height="850"
+
+>
 
 </canvas>
 
@@ -149,21 +252,28 @@ height="850">
 
 </div>
 
-<!-- ========================= -->
-<!-- PLAYER DATABASE -->
-<!-- ========================= -->
+<!-- ================================= -->
+<!-- DATABASE -->
+<!-- ================================= -->
 
-<section class="card">
+<section
+class="card">
 
-<div class="databaseHeader">
+<div
+class="databaseHeader">
 
 <div>
 
-<h2>Player Database</h2>
+<h2>
+
+Player Database
+
+</h2>
 
 <p>
 
-<span id="playerCount">
+<span
+id="playerCount">
 
 0
 
@@ -177,36 +287,56 @@ Players
 
 </div>
 
-<div class="toolbar">
+<div
+class="toolbar">
 
 <input
-type="text"
+
 id="search"
-placeholder="🔍 Search player...">
 
-<select id="sort">
+type="text"
 
-<option value="name">
+placeholder="🔍 Search player..."
+
+>
+
+<select
+id="sort">
+
+<option
+value="name">
+
 Sort by Name
+
 </option>
 
-<option value="danger">
+<option
+value="danger">
+
 Sort by Danger
+
 </option>
 
-<option value="difficulty">
+<option
+value="difficulty">
+
 Sort by Difficulty
+
 </option>
 
-<option value="rarity">
+<option
+value="rarity">
+
 Sort by Rarity
+
 </option>
 
 </select>
 
 </div>
 
-<div id="playerList">
+<div
+id="playerList">
 
 No players yet.
 
@@ -214,32 +344,42 @@ No players yet.
 
 </section>
 
-<!-- ========================= -->
-<!-- PLAYER INFO WINDOW -->
-<!-- NEW IN V13 -->
-<!-- ========================= -->
+<!-- ================================= -->
+<!-- PLAYER MODAL -->
+<!-- ================================= -->
 
 <div
+
 id="playerModal"
-class="modal hidden">
 
-<div class="modalContent">
+class="modal hidden"
 
-<h2 id="modalName">
+>
+
+<div
+class="modalContent">
+
+<h2
+id="modalName">
 
 Player
 
 </h2>
 
+<hr>
+
 <p>
 
-<strong id="labelRarity">
+<b>
 
 Rarity
 
-</strong>
+</b>
 
-<span id="modalRarity">
+<br>
+
+<span
+id="modalRarity">
 
 Common
 
@@ -249,13 +389,16 @@ Common
 
 <p>
 
-<strong id="labelDanger">
+<b>
 
 Danger
 
-</strong>
+</b>
 
-<span id="modalDanger">
+<br>
+
+<span
+id="modalDanger">
 
 0/25
 
@@ -265,13 +408,16 @@ Danger
 
 <p>
 
-<strong id="labelDifficulty">
+<b>
 
 Difficulty
 
-</strong>
+</b>
 
-<span id="modalDifficulty">
+<br>
+
+<span
+id="modalDifficulty">
 
 0/25
 
@@ -279,25 +425,26 @@ Difficulty
 
 </p>
 
-<label
-for="modalDescription">
-
-<strong id="labelDescription">
+<label>
 
 Description
-
-</strong>
 
 </label>
 
 <textarea
+
 id="modalDescription"
+
 rows="8"
-placeholder="Write anything about this player...">
+
+placeholder="Write a description..."
+
+>
 
 </textarea>
 
-<div class="modalButtons">
+<div
+class="modalButtons">
 
 <button
 id="saveDescription">
@@ -333,16 +480,20 @@ Close
 
 </div>
 
-<!-- ========================= -->
-<!-- DELETE CONFIRM WINDOW -->
-<!-- NEW IN V13 -->
-<!-- ========================= -->
+<!-- ================================= -->
+<!-- DELETE MODAL -->
+<!-- ================================= -->
 
 <div
-id="deleteModal"
-class="modal hidden">
 
-<div class="modalContent">
+id="deleteModal"
+
+class="modal hidden"
+
+>
+
+<div
+class="modalContent">
 
 <h2>
 
@@ -356,7 +507,8 @@ This action cannot be undone.
 
 </p>
 
-<div class="modalButtons">
+<div
+class="modalButtons">
 
 <button
 id="cancelDelete">
@@ -378,9 +530,12 @@ Delete
 
 </div>
 
-</main>
+<script
+src="script.js">
 
-<script src="script.js"></script>
+</script>
+
+</main>
 
 </body>
 
