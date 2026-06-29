@@ -121,14 +121,15 @@ if(name===""){
 
 status.style.color="#ff3b30";
 
-status.textContent=
-"Please enter a player.";
+status.textContent="Please enter a player.";
 
 return;
 
 }
 
 players.push({
+
+id:Date.now()+Math.random(),
 
 name:name,
 
@@ -154,13 +155,11 @@ difficultyValue.textContent=12;
 
 status.style.color="#16a34a";
 
-status.textContent=
-"Player added!";
+status.textContent="Player added!";
 
 refresh();
 
 };
-
 // ---------- Save ----------
 
 function savePlayers(){
@@ -180,9 +179,13 @@ darkMode?"dark":"light"
 }
 // ---------- Delete ----------
 
-function deletePlayer(index){
+function deletePlayer(id){
 
-players.splice(index,1);
+players=players.filter(
+
+player=>player.id!=id
+
+);
 
 savePlayers();
 
@@ -319,7 +322,7 @@ ${player.difficulty}/25
 <div class="playerButtons">
 
 <button
-onclick="deletePlayer(players.indexOf(player))">
+onclick="deletePlayer(player.id)"
 
 Delete
 
