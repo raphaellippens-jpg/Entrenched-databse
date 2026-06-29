@@ -1,60 +1,299 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
+
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Entrenched Player Database V11</title>
+
+<meta name="viewport"
+content="width=device-width, initial-scale=1.0">
+
+<title>Entrenched Database V12</title>
+
 <link rel="stylesheet" href="style.css">
+
 </head>
+
 <body>
 
 <header>
-    <h1>Entrenched Player Database</h1>
-    <p>Version 11</p>
+
+<div class="titleSection">
+
+<h1>Entrenched Database</h1>
+
+<p>
+Community Player Statistics
+</p>
+
+</div>
+
+<div class="headerButtons">
+
+<button
+id="themeToggle"
+class="headerButton">
+
+🌙 Dark Mode
+
+</button>
+
+</div>
+
 </header>
 
-<main class="layout">
+<main>
 
-<section class="card controls">
-    <h2>Add Player</h2>
+<div class="layout">
 
-    <label for="playerName">Player Name</label>
-    <input id="playerName" type="text" placeholder="Enter player name">
+<!-- ====================== -->
+<!-- LEFT SIDE -->
+<!-- ====================== -->
 
-    <label for="danger">Danger</label>
-    <input id="danger" type="range" min="0" max="10" value="5">
-    <div id="dangerValue" class="value">5</div>
+<section class="card">
 
-    <label for="difficulty">Difficulty</label>
-    <input id="difficulty" type="range" min="0" max="10" value="5">
-    <div id="difficultyValue" class="value">5</div>
+<h2>Add Player</h2>
 
-    <label for="rarity">Rarity</label>
-    <select id="rarity">
-        <option>Legendary</option>
-        <option>Epic</option>
-        <option>Rare</option>
-        <option>Three-Quarters-Rare</option>
-        <option>Semi-Rare</option>
-        <option>Uncommon</option>
-        <option>Common</option>
-    </select>
+<label>
 
-    <button id="addPlayer">Add Player</button>
+Player Name
 
-    <div id="status"></div>
+</label>
+
+<input
+type="text"
+id="playerName"
+placeholder="Player name">
+
+<label>
+
+Danger
+
+</label>
+
+<input
+type="range"
+id="danger"
+min="0"
+max="25"
+value="12">
+
+<div
+class="value"
+id="dangerValue">
+
+12
+
+</div>
+
+<label>
+
+Difficulty
+
+</label>
+
+<input
+type="range"
+id="difficulty"
+min="0"
+max="25"
+value="12">
+
+<div
+class="value"
+id="difficultyValue">
+
+12
+
+</div>
+
+<label>
+
+Rarity
+
+</label>
+
+<select id="rarity">
+
+<option>
+
+Legendary
+
+</option>
+
+<option>
+
+Epic
+
+</option>
+
+<option>
+
+Rare
+
+</option>
+
+<option>
+
+Three-Quarters-Rare
+
+</option>
+
+<option>
+
+Semi-Rare
+
+</option>
+
+<option>
+
+Uncommon
+
+</option>
+
+<option>
+
+Common
+
+</option>
+
+</select>
+
+<button
+id="addPlayer">
+
+Add Player
+
+</button>
+
+<div
+id="status">
+
+</div>
+
 </section>
 
-<section class="card graphCard">
-    <h2>Danger vs Difficulty</h2>
-    <canvas id="graph" width="1000" height="650"></canvas>
+<!-- ====================== -->
+<!-- RIGHT SIDE -->
+<!-- ====================== -->
+
+<section
+class="card graphCard">
+
+<div class="graphHeader">
+
+<div>
+
+<h2>
+
+Danger vs Difficulty
+
+</h2>
+
+<p>
+
+25 × 25 Graph
+
+</p>
+
+</div>
+
+</div>
+
+<canvas
+id="graph"
+width="1200"
+height="850">
+
+</canvas>
+
 </section>
 
-<section class="card playerCard">
-    <h2>Players (<span id="playerCount">0</span>)</h2>
-    <div id="playerList">
-        No players yet.
-    </div>
+</div>
+
+<!-- ====================== -->
+<!-- PLAYER DATABASE -->
+<!-- ====================== -->
+
+<section
+class="card">
+
+<div class="databaseHeader">
+
+<div>
+
+<h2>
+
+Player Database
+
+</h2>
+
+<p>
+
+<span
+id="playerCount">
+
+0
+
+</span>
+
+Players
+
+</p>
+
+</div>
+
+</div>
+
+<div class="toolbar">
+
+<input
+
+type="text"
+
+id="search"
+
+placeholder="🔍 Search player..."
+
+>
+
+<select id="sort">
+
+<option value="name">
+
+Sort by Name
+
+</option>
+
+<option value="danger">
+
+Sort by Danger
+
+</option>
+
+<option value="difficulty">
+
+Sort by Difficulty
+
+</option>
+
+<option value="rarity">
+
+Sort by Rarity
+
+</option>
+
+</select>
+
+</div>
+
+<div
+id="playerList">
+
+No players yet.
+
+</div>
+
 </section>
 
 </main>
@@ -62,4 +301,5 @@
 <script src="script.js"></script>
 
 </body>
+
 </html>
