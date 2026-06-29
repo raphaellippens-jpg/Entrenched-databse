@@ -726,3 +726,35 @@ gap:16px;
 }
 
 }
+
+/* ====================================== */
+/* Import / Export Buttons */
+/* ====================================== */
+
+#exportDatabase{
+
+background:#16a34a;
+
+margin-top:10px;
+
+}
+
+#exportDatabase:hover{
+
+filter:brightness(1.08);
+
+}
+
+#importDatabase{
+
+background:#2563eb;
+
+margin-top:10px;
+
+}
+
+#importDatabase:hover{
+
+filter:brightness(1.08);
+
+}
