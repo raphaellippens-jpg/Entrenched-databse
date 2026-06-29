@@ -1399,37 +1399,6 @@ refresh();
 
 exportDatabase.onclick=()=>{
 
-const data=JSON.stringify(
-players,
-null,
-2
-);
-
-const blob=new Blob(
-[data],
-{
-type:"application/json"
-}
-);
-
-const url=
-URL.createObjectURL(blob);
-
-const a=
-document.createElement("a");
-
-a.href=url;
-
-a.download=
-"EntrenchedDatabase.json";
-
-a.click();
-
-URL.revokeObjectURL(url);
-
-status.style.color="#16a34a";
-
-status.textContent=
-"Database exported.";
+alert("HELLO");
 
 };
